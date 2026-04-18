@@ -32,4 +32,14 @@ public class UndergraduateStudent extends Student {
     public String toDataString() {
         return String.format("UNDERGRAD|%d|%s|%.2f|%s", getId(), getName(), getMarks(), major);
     }
+
+    @Override
+    public String toJson() {
+        return String.format("{\"id\":%d,\"name\":\"%s\",\"marks\":%.2f,\"type\":\"%s\",\"major\":\"%s\"}",
+                getId(),
+                escapeJson(getName()),
+                getMarks(),
+                getType(),
+                escapeJson(major));
+    }
 }

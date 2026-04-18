@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="app-shell">
+    <header>
+        <h1>Student Management System</h1>
+        <div class="toolbar">
+            <button id="refreshButton">Refresh</button>
+            <button id="newButton">Add Student</button>
+            <div class="search-block">
+                <input id="searchInput" type="text" placeholder="Search ID" />
+                <button id="searchButton">Search</button>
+            </div>
+        </div>
+    </header>
+
+    <div id="message" class="message"></div>
+
+    <section class="table-wrap">
+        <table id="studentTable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Marks</th>
+                <th>Grade</th>
+                <th>Type</th>
+                <th>Details</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+</div>
+
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <h2 id="modalTitle">Add Student</h2>
+        <form id="studentForm">
+            <label>
+                Student ID
+                <input id="studentId" type="number" min="1" required />
+            </label>
+            <label>
+                Name
+                <input id="studentName" type="text" required />
+            </label>
+            <label>
+                Marks
+                <input id="studentMarks" type="number" min="0" max="100" step="0.1" required />
+            </label>
+            <label>
+                Type
+                <select id="studentType">
+                    <option value="Regular">Regular</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                    <option value="Graduate">Graduate</option>
+                </select>
+            </label>
+            <label id="extraLabel">
+                Major / Thesis
+                <input id="studentExtra" type="text" disabled />
+            </label>
+            <div class="modal-actions">
+                <button type="submit">Save</button>
+                <button type="button" id="cancelButton">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

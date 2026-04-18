@@ -2,6 +2,7 @@ import model.GraduateStudent;
 import model.Student;
 import model.UndergraduateStudent;
 
+import javax.swing.SwingUtilities;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,9 +22,47 @@ public class StudentManagementSystem {
         loadData();
     }
 
+    public List<Student> getStudents() {
+        return new ArrayList<>(students);
+    }
+
+    public boolean addStudent(Student student) {
+        if (studentExists(student.getId())) {
+            return false;
+        }
+        students.add(student);
+        saveData();
+        return true;
+    }
+
+    public boolean replaceStudent(Student updatedStudent) {
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getId() == updatedStudent.getId()) {
+                students.set(i, updatedStudent);
+                saveData();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteStudentById(int id) {
+        Student student = findStudentById(id);
+        if (student == null) {
+            return false;
+        }
+        students.remove(student);
+        saveData();
+        return true;
+    }
+
     public static void main(String[] args) {
-        StudentManagementSystem app = new StudentManagementSystem();
-        app.run();
+        if (args.length > 0 && args[0].equalsIgnoreCase("cli")) {
+            StudentManagementSystem app = new StudentManagementSystem();
+            app.run();
+        } else {
+            SwingUtilities.invokeLater(() -> new StudentManagementSystemUI().setVisible(true));
+        }
     }
 
     private void run() {
@@ -167,7 +206,7 @@ public class StudentManagementSystem {
         return findStudentById(id) != null;
     }
 
-    private Student findStudentById(int id) {
+    public Student findStudentById(int id) {
         for (Student student : students) {
             if (student.getId() == id) {
                 return student;
@@ -200,7 +239,7 @@ public class StudentManagementSystem {
         }
     }
 
-    private void saveData() {
+    public void saveData() {
         try (PrintWriter writer = new PrintWriter(DATA_FILE)) {
             for (Student student : students) {
                 writer.println(student.toDataString());
